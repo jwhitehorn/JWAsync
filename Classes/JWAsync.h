@@ -18,7 +18,7 @@ typedef void (^ EmptyBlock)(void);
 
 void UI_THREAD(EmptyBlock block){
     if(![NSThread isMainThread]){
-        dispatch_sync(dispatch_get_main_queue(), block);
+        dispatch_sync(dispatch_get_main_queue(), block); return;
     }
     block();
 }
