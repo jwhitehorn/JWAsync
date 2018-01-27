@@ -22,13 +22,10 @@ typedef void (^ ReductionBlock)(id, id, CallbackBlock);
 typedef void (^ TransformationBlock)(id, CallbackBlock);
 typedef void (^ TruthBlock)(void (^)(bool));
 typedef void (^ EmptyBlock)(void);
+#define CompletionBlock ContinuationBlock
 
-void UI_THREAD(EmptyBlock block){
-    if(![NSThread isMainThread]){
-        dispatch_sync(dispatch_get_main_queue(), block); return;
-    }
-    block();
-}
+
+extern void UI_THREAD(EmptyBlock block);
 
 @interface JWAsync : NSObject
 

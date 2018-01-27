@@ -15,6 +15,13 @@
 
 #import "JWAsync.h"
 
+void UI_THREAD(EmptyBlock block){
+    if(![NSThread isMainThread]){
+        dispatch_sync(dispatch_get_main_queue(), block); return;
+    }
+    block();
+}
+
 @implementation JWAsync
 
 static dispatch_queue_t queue;
