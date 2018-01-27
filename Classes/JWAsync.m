@@ -23,7 +23,7 @@ static dispatch_queue_t queue;
     queue = dispatch_queue_create("JWAsync", DISPATCH_QUEUE_CONCURRENT);
 }
 
-+ (void) forever:(ContinuationBlock)block onError:(ContinuationBlock)exitBlock {
++ (void) forever:(void (^)(ContinuationBlock))block onError:(ContinuationBlock)exitBlock {
     dispatch_async(queue, ^{
         block(^(NSError *err){
             dispatch_async(queue, ^{
@@ -36,7 +36,7 @@ static dispatch_queue_t queue;
     });
 }
 
-+ (void) whilst:(TruthBlock)truthBlock performAction:(ContinuationBlock)block onCompletion:(ContinuationBlock)exitBlock {
++ (void) whilst:(TruthBlock)truthBlock performAction:(void (^)(ContinuationBlock))block onCompletion:(ContinuationBlock)exitBlock {
     dispatch_async(queue, ^{
         truthBlock( ^(bool keepGoing){
             dispatch_async(queue, ^{
@@ -78,7 +78,7 @@ static dispatch_queue_t queue;
 }
 
 + (void) series:(NSArray *) blocks onCompletion:(ContinuationBlock)exitBlock {
-    [self each:blocks onEach:^(ContinuationBlock block, ContinuationBlock next){
+    [self each:blocks onEach:^(void (^ block)(ContinuationBlock), ContinuationBlock next){
         block(next);
     } onCompletion:exitBlock];
 }

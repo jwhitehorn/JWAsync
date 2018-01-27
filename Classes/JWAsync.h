@@ -32,8 +32,8 @@ void UI_THREAD(EmptyBlock block){
 
 @interface JWAsync : NSObject
 
-+ (void) forever:(ContinuationBlock)block onError:(ContinuationBlock)exitBlock;
-+ (void) whilst:(TruthBlock)truthBlock performAction:(ContinuationBlock)block onCompletion:(ContinuationBlock)exitBlock;
++ (void) forever:(void (^)(ContinuationBlock))block onError:(ContinuationBlock)exitBlock;
++ (void) whilst:(TruthBlock)truthBlock performAction:(void (^)(ContinuationBlock))block onCompletion:(ContinuationBlock)exitBlock;
 + (void) map:(NSArray *) array transform:(TransformationBlock)map onCompletion:(CallbackBlock)callback;
 + (void) reduce:(NSArray *)array startingState:(id)startingState transform:(ReductionBlock)reduceBlock onCompletion:(CallbackBlock)exitBlock;
 + (void) series:(NSArray *) blocks onCompletion:(ContinuationBlock)exitBlock;
