@@ -37,3 +37,9 @@ extern void UI_THREAD(EmptyBlock block);
 + (void) each:(NSArray *) array onEach:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock;
 
 @end
+
+@interface NSArray (JWAsync)
+
+- (void) eachDo:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock;
+
+@end

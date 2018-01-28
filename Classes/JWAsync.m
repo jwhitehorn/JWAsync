@@ -111,3 +111,11 @@ static dispatch_queue_t queue;
 }
 
 @end
+
+@implementation NSArray (JWAsync)
+
+- (void) eachDo:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock {
+    [JWAsync each:self onEach:itterator onCompletion:exitBlock];
+}
+
+@end
