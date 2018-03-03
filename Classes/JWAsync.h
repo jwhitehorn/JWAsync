@@ -35,11 +35,13 @@ extern void UI_THREAD(EmptyBlock block);
 + (void) reduce:(NSArray *)array startingState:(id)startingState transform:(ReductionBlock)reduceBlock onCompletion:(CallbackBlock)exitBlock;
 + (void) series:(NSArray *) blocks onCompletion:(ContinuationBlock)exitBlock;
 + (void) each:(NSArray *) array onEach:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock;
++ (void) each:(NSArray *) array onEach:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock withQueue:(dispatch_queue_t)queue;
 
 @end
 
 @interface NSArray (JWAsync)
 
 - (void) eachDo:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock;
+- (void) eachDo:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock withQueue:(dispatch_queue_t)queue;
 
 @end

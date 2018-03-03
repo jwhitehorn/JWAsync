@@ -91,7 +91,11 @@ static dispatch_queue_t queue;
 }
 
 + (void) each:(NSArray *) array onEach:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock {
-    dispatch_async(queue, ^{
+    [self each:array onEach:itterator onCompletion:exitBlock withQueue:queue];
+}
+
++ (void) each:(NSArray *) array onEach:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock withQueue:(dispatch_queue_t)aQueue{
+    dispatch_async(aQueue, ^{
         if(!array || [array count] == 0){
             exitBlock(nil); return;
         }
@@ -100,7 +104,7 @@ static dispatch_queue_t queue;
         [arr removeObjectAtIndex:0];
 
         itterator(item, ^(NSError *err){
-            dispatch_async(queue, ^{
+            dispatch_async(aQueue, ^{
                 if(err){
                     exitBlock(err); return;
                 }
@@ -116,6 +120,10 @@ static dispatch_queue_t queue;
 
 - (void) eachDo:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock {
     [JWAsync each:self onEach:itterator onCompletion:exitBlock];
+}
+
+- (void) eachDo:(ItteratorBlock)itterator onCompletion:(ContinuationBlock)exitBlock withQueue:(dispatch_queue_t)queue {
+    [JWAsync each:self onEach:itterator onCompletion:exitBlock withQueue:queue];
 }
 
 @end
